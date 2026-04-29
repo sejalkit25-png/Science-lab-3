@@ -1,0 +1,277 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Chemistry Lab</title>
+
+<style>
+:root{
+  --bg:#0b1020;
+  --card:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.15);
+  --accent:#7dd3fc;
+  --text:#eaf2ff;
+}
+
+body{
+  margin:0;
+  font-family:Segoe UI,Arial;
+  background:linear-gradient(135deg,#0b1020,#1a2a5a);
+  color:var(--text);
+}
+
+header,footer{
+  text-align:center;
+  padding:15px;
+  background:var(--card);
+}
+
+.container{
+  display:grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap:15px;
+  padding:15px;
+}
+
+.card{
+  background:var(--card);
+  padding:15px;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+
+.item{
+  padding:10px;
+  margin:6px 0;
+  background:linear-gradient(90deg,#7dd3fc,#a78bfa);
+  color:black;
+  border-radius:8px;
+  cursor:grab;
+  text-align:center;
+  transition:0.2s;
+}
+.item:active{transform:scale(1.1);}
+
+.dropzone{
+  height:120px;
+  border:2px dashed var(--accent);
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  transition:0.3s;
+}
+
+.dropzone.hover{
+  background:rgba(125,211,252,0.2);
+}
+
+/* REACTION ANIMATION */
+@keyframes react{
+  0%{opacity:0.3;}
+  50%{opacity:1;}
+  100%{opacity:0.3;}
+}
+.react{
+  animation:react 1s infinite;
+}
+
+.lab-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+textarea{
+  width:100%;
+  margin-top:10px;
+  background:rgba(255,255,255,0.05);
+  color:white;
+}
+
+#result{
+  margin-top:10px;
+  color:#7dd3fc;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🧪 Virtual Chemistry Lab</h1>
+<p>Perform Experiments | Observe Reactions</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h3>📋 Instructions</h3>
+<ul>
+<li>Place Beaker in Mixing Zone</li>
+<li>Add chemicals</li>
+<li>Use Reaction Zone</li>
+<li>Observe output</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>⚗️ Lab Workspace</h3>
+
+<div class="lab-grid">
+<div class="dropzone" id="mix">Mixing Zone</div>
+<div class="dropzone" id="heat">Heating Zone</div>
+<div class="dropzone" id="react">Reaction Zone</div>
+
+<div class="dropzone" id="store">Storage</div>
+<div class="dropzone" id="observe">Observation</div>
+<div class="dropzone" id="exp">Experiment Area</div>
+</div>
+
+<p id="result">No activity yet...</p>
+<textarea id="log" rows="4" placeholder="Observation log..."></textarea>
+
+</div>
+
+<div class="card">
+<h3>🧫 Equipment</h3>
+<div class="item" draggable="true">Beaker</div>
+
+<h3>🧴 Acids</h3>
+<div class="item" draggable="true">HCl</div>
+<div class="item" draggable="true">H₂SO₄</div>
+
+<h3>🧪 Bases</h3>
+<div class="item" draggable="true">NaOH</div>
+<div class="item" draggable="true">KOH</div>
+
+<h3>🧂 Others</h3>
+<div class="item" draggable="true">NaCl</div>
+<div class="item" draggable="true">H₂O</div>
+</div>
+
+</div>
+
+<footer>
+<p>© 2026 Virtual Chemistry Lab</p>
+</footer>
+
+<script>
+let dragged="";
+let mixItems=[];
+let hasBeaker=false;
+
+// DRAG
+document.querySelectorAll(".item").forEach(item=>{
+  item.addEventListener("dragstart",()=>{
+    dragged=item.innerText;
+  });
+});
+
+// DROP
+document.querySelectorAll(".dropzone").forEach(zone=>{
+  zone.addEventListener("dragover",e=>{
+    e.preventDefault();
+    zone.classList.add("hover");
+  });
+
+  zone.addEventListener("dragleave",()=>{
+    zone.classList.remove("hover");
+  });
+
+  zone.addEventListener("drop",()=>{
+    zone.classList.remove("hover");
+
+    let result=document.getElementById("result");
+    let log=document.getElementById("log");
+
+    // MIXING
+    if(zone.id==="mix"){
+      if(dragged==="Beaker"){
+        hasBeaker=true;
+        zone.innerHTML="🧫 Beaker";
+      } 
+      else if(hasBeaker){
+        mixItems.push(dragged);
+        zone.innerHTML="🧫 "+mixItems.join(" + ");
+      } 
+      else{
+        result.innerText="⚠️ Add Beaker first!";
+      }
+    }
+
+    // HEATING
+    else if(zone.id==="heat"){
+      zone.innerHTML="🔥 "+dragged;
+      log.value+="Heated "+dragged+"\n";
+    }
+
+    // 🔥 REACTION (MAIN PART)
+    else if(zone.id==="react"){
+
+      if(!hasBeaker || mixItems.length===0){
+        zone.innerHTML="⚠️ No mixture!";
+        return;
+      }
+
+      let combo = mixItems.sort().join("+");
+
+      zone.classList.add("react");
+      zone.innerHTML="⚗️ Reacting...<br>"+mixItems.join(" + ");
+
+      setTimeout(()=>{
+        zone.classList.remove("react");
+
+        if(combo==="HCl+NaOH"){
+          zone.innerHTML="⚗️ Neutralization<br>HCl + NaOH → NaCl + H₂O";
+        }
+        else if(combo==="H₂SO₄+NaOH"){
+          zone.innerHTML="⚗️ Acid-Base Reaction<br>H₂SO₄ + NaOH → Na₂SO₄ + H₂O";
+        }
+        else if(combo==="NaCl+H₂O"){
+          zone.innerHTML="💧 Dissolution<br>NaCl in Water";
+        }
+        else if(combo==="HCl+H₂O"){
+          zone.innerHTML="🌡️ Dilution Reaction";
+        }
+        else if(combo.includes("HCl") || combo.includes("H₂SO₄")){
+          zone.innerHTML="🧪 Acidic Reaction";
+        }
+        else{
+          zone.innerHTML="❌ No Reaction";
+        }
+
+        log.value+="Reaction: "+combo+"\n";
+
+        mixItems=[];
+        hasBeaker=false;
+
+      },1200);
+    }
+
+    // STORAGE
+    else if(zone.id==="store"){
+      result.innerText=dragged+" stored";
+    }
+
+    // OBSERVE
+    else if(zone.id==="observe"){
+      log.value+="Observed: "+dragged+"\n";
+    }
+
+    // EXPERIMENT
+    else if(zone.id==="exp"){
+      result.innerText="🧪 Setup ready";
+    }
+
+  });
+});
+</script>
+
+</body>
+</html>
+```
