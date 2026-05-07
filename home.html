@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Chemistry Lab</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
+}
+
+body{
+    background:
+    linear-gradient(rgba(5,10,30,0.88), rgba(15,20,50,0.92)),
+    url('https://images.unsplash.com/photo-1532634896-26909d0d4b6b?q=80&w=1600');
+    
+    background-size:cover;
+    background-position:center;
+    color:white;
+    min-height:100vh;
+}
+
+/* Navbar */
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#7dd3fc;
+}
+
+.nav-btn{
+    text-decoration:none;
+    color:black;
+    background:linear-gradient(90deg,#7dd3fc,#a78bfa);
+    padding:12px 22px;
+    border-radius:12px;
+    font-weight:bold;
+}
+
+/* Hero */
+.hero{
+    text-align:center;
+    padding:70px 20px 50px;
+}
+
+.hero h1{
+    font-size:60px;
+    margin-bottom:20px;
+    background:linear-gradient(90deg,#7dd3fc,#c084fc);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    font-size:20px;
+    opacity:0.9;
+    max-width:700px;
+    margin:auto;
+    line-height:1.6;
+}
+
+.hero-btn{
+    display:inline-block;
+    margin-top:30px;
+    text-decoration:none;
+    background:linear-gradient(90deg,#7dd3fc,#a78bfa);
+    color:black;
+    padding:15px 35px;
+    border-radius:12px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+/* Cards */
+.features{
+    width:90%;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    backdrop-filter:blur(12px);
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 10px 30px rgba(125,211,252,0.25);
+}
+
+.card h2{
+    font-size:26px;
+    margin-bottom:15px;
+}
+
+.card p{
+    opacity:0.85;
+    line-height:1.5;
+}
+
+/* Stats */
+.stats{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:25px;
+    margin:60px 20px;
+}
+
+.stat-box{
+    background:rgba(255,255,255,0.08);
+    padding:25px 35px;
+    border-radius:15px;
+    min-width:180px;
+}
+
+.stat-box h2{
+    color:#7dd3fc;
+    font-size:32px;
+}
+
+/* Footer */
+footer{
+    text-align:center;
+    padding:30px;
+    opacity:0.8;
+}
+
+@media(max-width:768px){
+    .hero h1{
+        font-size:38px;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<nav>
+    <div class="logo">🧪 Virtual Chemistry Lab</div>
+    <a href="index.html" class="nav-btn">Launch Lab</a>
+</nav>
+
+<section class="hero">
+    <h1>Virtual Chemistry Laboratory</h1>
+    <p>
+        Experience chemistry like never before. Perform live experiments,
+        analyze reactions, and master scientific concepts through immersive simulations.
+    </p>
+
+    <a href="index.html" class="hero-btn">
+        Start Experiment →
+    </a>
+</section>
+
+<section class="features">
+
+    <div class="card">
+        <h2>⚗️ Smart Experiments</h2>
+        <p>Perform acid-base, heating, and reaction simulations interactively.</p>
+    </div>
+
+    <div class="card">
+        <h2>📊 Observation Logs</h2>
+        <p>Track every experiment and record scientific observations instantly.</p>
+    </div>
+
+    <div class="card">
+        <h2>🔥 Real Simulations</h2>
+        <p>Drag, drop, mix chemicals, and watch reactions happen in real time.</p>
+    </div>
+
+    <div class="card">
+        <h2>🧠 Interactive Learning</h2>
+        <p>Understand chemical concepts visually with engaging simulations.</p>
+    </div>
+
+</section>
+
+<section class="stats">
+
+    <div class="stat-box">
+        <h2>20+</h2>
+        <p>Experiments</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>50+</h2>
+        <p>Chemicals</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>100%</h2>
+        <p>Interactive</p>
+    </div>
+
+</section>
+
+<footer>
+    © 2026 Virtual Chemistry Lab | Built for Learning
+</footer>
+
+</body>
+</html>
