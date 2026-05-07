@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,85 +16,183 @@
 
 body{
   margin:0;
-  font-family:Segoe UI,Arial;
-  background:linear-gradient(135deg,#0b1020,#1a2a5a);
+  font-family:Segoe UI,Arial,sans-serif;
+
+  background:
+  linear-gradient(rgba(11,16,32,0.88), rgba(26,42,90,0.92)),
+  url('https://images.unsplash.com/photo-1532634896-26909d0d4b6b?q=80&w=1600&auto=format&fit=crop');
+
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+
   color:var(--text);
 }
 
 header,footer{
   text-align:center;
   padding:15px;
-  background:var(--card);
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+/* BACK BUTTON */
+.top-btn{
+  text-align:center;
+  margin-top:15px;
+}
+
+.top-btn a{
+  text-decoration:none;
+  padding:10px 22px;
+  border-radius:10px;
+
+  background:linear-gradient(90deg,#7dd3fc,#a78bfa);
+  color:black;
+  font-weight:bold;
+
+  transition:0.3s;
+}
+
+.top-btn a:hover{
+  transform:scale(1.05);
+  display:inline-block;
 }
 
 .container{
   display:grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns:1fr 2fr 1fr;
   gap:15px;
   padding:15px;
 }
 
+/* CARD */
 .card{
-  background:var(--card);
+  background:rgba(255,255,255,0.08);
   padding:15px;
-  border-radius:10px;
-  border:1px solid var(--border);
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(10px);
+
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
 }
 
+/* DRAG ITEMS */
 .item{
-  padding:10px;
-  margin:6px 0;
+  padding:12px;
+  margin:8px 0;
+
   background:linear-gradient(90deg,#7dd3fc,#a78bfa);
   color:black;
-  border-radius:8px;
+
+  border-radius:10px;
   cursor:grab;
   text-align:center;
-  transition:0.2s;
-}
-.item:active{transform:scale(1.1);}
+  font-weight:bold;
 
+  transition:0.25s;
+}
+
+.item:hover{
+  transform:translateY(-3px);
+  box-shadow:0 5px 15px rgba(125,211,252,0.4);
+}
+
+.item:active{
+  transform:scale(1.08);
+}
+
+/* DROP ZONES */
 .dropzone{
   height:120px;
+
   border:2px dashed var(--accent);
-  border-radius:10px;
+  border-radius:12px;
+
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
+
+  text-align:center;
+
   transition:0.3s;
+  background:rgba(255,255,255,0.03);
 }
 
 .dropzone.hover{
-  background:rgba(125,211,252,0.2);
+  background:rgba(125,211,252,0.18);
+  transform:scale(1.03);
 }
 
 /* REACTION ANIMATION */
 @keyframes react{
   0%{opacity:0.3;}
-  50%{opacity:1;}
+  50%{
+    opacity:1;
+    transform:scale(1.04);
+  }
   100%{opacity:0.3;}
 }
+
 .react{
   animation:react 1s infinite;
 }
 
+/* LAB GRID */
 .lab-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:10px;
+  gap:12px;
 }
 
-textarea{
-  width:100%;
-  margin-top:10px;
-  background:rgba(255,255,255,0.05);
-  color:white;
-}
-
+/* RESULT */
 #result{
-  margin-top:10px;
+  margin-top:15px;
   color:#7dd3fc;
   font-weight:bold;
+  font-size:18px;
+}
+
+/* LOG */
+textarea{
+  width:100%;
+  margin-top:12px;
+  padding:12px;
+
+  background:rgba(255,255,255,0.05);
+  color:white;
+
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:10px;
+
+  resize:none;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+  .container{
+    grid-template-columns:1fr;
+  }
+
+  .lab-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .lab-grid{
+    grid-template-columns:1fr;
+  }
+
+  header h1{
+    font-size:28px;
+  }
+
 }
 </style>
 </head>
@@ -104,54 +201,126 @@ textarea{
 
 <header>
 <h1>🧪 Virtual Chemistry Lab</h1>
-<p>Perform Experiments | Observe Reactions</p>
+<p>Perform Experiments | Observe Reactions | Learn Chemistry</p>
 </header>
+
+<!-- HOME BUTTON -->
+<div class="top-btn">
+  <a href="home.html">⬅ Back to Home</a>
+</div>
 
 <div class="container">
 
+<!-- LEFT PANEL -->
 <div class="card">
+
 <h3>📋 Instructions</h3>
+
 <ul>
 <li>Place Beaker in Mixing Zone</li>
 <li>Add chemicals</li>
 <li>Use Reaction Zone</li>
 <li>Observe output</li>
+<li>Check logs for observations</li>
 </ul>
+
+<br>
+
+<h3>🧠 Experiment Tips</h3>
+
+<p>
+Try combining acids and bases to perform neutralization reactions.
+Observe different outputs in the reaction zone.
+</p>
+
 </div>
 
+<!-- CENTER PANEL -->
 <div class="card">
+
 <h3>⚗️ Lab Workspace</h3>
 
+<br>
+
 <div class="lab-grid">
-<div class="dropzone" id="mix">Mixing Zone</div>
-<div class="dropzone" id="heat">Heating Zone</div>
-<div class="dropzone" id="react">Reaction Zone</div>
 
-<div class="dropzone" id="store">Storage</div>
-<div class="dropzone" id="observe">Observation</div>
-<div class="dropzone" id="exp">Experiment Area</div>
+<div class="dropzone" id="mix">
+Mixing Zone
 </div>
 
-<p id="result">No activity yet...</p>
-<textarea id="log" rows="4" placeholder="Observation log..."></textarea>
+<div class="dropzone" id="heat">
+Heating Zone
+</div>
+
+<div class="dropzone" id="react">
+Reaction Zone
+</div>
+
+<div class="dropzone" id="store">
+Storage
+</div>
+
+<div class="dropzone" id="observe">
+Observation
+</div>
+
+<div class="dropzone" id="exp">
+Experiment Area
+</div>
 
 </div>
 
+<p id="result">
+No activity yet...
+</p>
+
+<textarea
+id="log"
+rows="5"
+placeholder="Observation log..."
+></textarea>
+
+</div>
+
+<!-- RIGHT PANEL -->
 <div class="card">
+
 <h3>🧫 Equipment</h3>
-<div class="item" draggable="true">Beaker</div>
+
+<div class="item" draggable="true">
+Beaker
+</div>
 
 <h3>🧴 Acids</h3>
-<div class="item" draggable="true">HCl</div>
-<div class="item" draggable="true">H₂SO₄</div>
+
+<div class="item" draggable="true">
+HCl
+</div>
+
+<div class="item" draggable="true">
+H₂SO₄
+</div>
 
 <h3>🧪 Bases</h3>
-<div class="item" draggable="true">NaOH</div>
-<div class="item" draggable="true">KOH</div>
+
+<div class="item" draggable="true">
+NaOH
+</div>
+
+<div class="item" draggable="true">
+KOH
+</div>
 
 <h3>🧂 Others</h3>
-<div class="item" draggable="true">NaCl</div>
-<div class="item" draggable="true">H₂O</div>
+
+<div class="item" draggable="true">
+NaCl
+</div>
+
+<div class="item" draggable="true">
+H₂O
+</div>
+
 </div>
 
 </div>
@@ -161,117 +330,227 @@ textarea{
 </footer>
 
 <script>
-let dragged="";
-let mixItems=[];
-let hasBeaker=false;
+let dragged = "";
+let mixItems = [];
+let hasBeaker = false;
 
-// DRAG
+// DRAGGING
 document.querySelectorAll(".item").forEach(item=>{
+
   item.addEventListener("dragstart",()=>{
-    dragged=item.innerText;
+
+    dragged = item.innerText;
+
   });
+
 });
 
-// DROP
+// DROP ZONES
 document.querySelectorAll(".dropzone").forEach(zone=>{
-  zone.addEventListener("dragover",e=>{
+
+  zone.addEventListener("dragover",(e)=>{
+
     e.preventDefault();
     zone.classList.add("hover");
+
   });
 
   zone.addEventListener("dragleave",()=>{
+
     zone.classList.remove("hover");
+
   });
 
   zone.addEventListener("drop",()=>{
+
     zone.classList.remove("hover");
 
-    let result=document.getElementById("result");
-    let log=document.getElementById("log");
+    let result = document.getElementById("result");
+    let log = document.getElementById("log");
 
-    // MIXING
-    if(zone.id==="mix"){
-      if(dragged==="Beaker"){
-        hasBeaker=true;
-        zone.innerHTML="🧫 Beaker";
-      } 
+    // MIXING ZONE
+    if(zone.id === "mix"){
+
+      if(dragged === "Beaker"){
+
+        hasBeaker = true;
+        zone.innerHTML = "🧫 Beaker";
+
+      }
+
       else if(hasBeaker){
+
         mixItems.push(dragged);
-        zone.innerHTML="🧫 "+mixItems.join(" + ");
-      } 
+
+        zone.innerHTML =
+        "🧫 " + mixItems.join(" + ");
+
+      }
+
       else{
-        result.innerText="⚠️ Add Beaker first!";
+
+        result.innerText =
+        "⚠️ Add Beaker first!";
+
       }
+
     }
 
-    // HEATING
-    else if(zone.id==="heat"){
-      zone.innerHTML="🔥 "+dragged;
-      log.value+="Heated "+dragged+"\n";
+    // HEATING ZONE
+    else if(zone.id === "heat"){
+
+      zone.innerHTML =
+      "🔥 " + dragged;
+
+      result.innerText =
+      dragged + " heated successfully";
+
+      log.value +=
+      "Heated: " + dragged + "\n";
+
     }
 
-    // 🔥 REACTION (MAIN PART)
-    else if(zone.id==="react"){
+    // REACTION ZONE
+    else if(zone.id === "react"){
 
-      if(!hasBeaker || mixItems.length===0){
-        zone.innerHTML="⚠️ No mixture!";
+      if(!hasBeaker || mixItems.length === 0){
+
+        zone.innerHTML =
+        "⚠️ No mixture!";
+
         return;
+
       }
 
-      let combo = mixItems.sort().join("+");
+      let combo =
+      mixItems.sort().join("+");
 
       zone.classList.add("react");
-      zone.innerHTML="⚗️ Reacting...<br>"+mixItems.join(" + ");
+
+      zone.innerHTML =
+      "⚗️ Reacting...<br>" +
+      mixItems.join(" + ");
 
       setTimeout(()=>{
+
         zone.classList.remove("react");
 
-        if(combo==="HCl+NaOH"){
-          zone.innerHTML="⚗️ Neutralization<br>HCl + NaOH → NaCl + H₂O";
+        // REACTIONS
+        if(combo === "HCl+NaOH"){
+
+          zone.innerHTML =
+          "⚗️ Neutralization<br>" +
+          "HCl + NaOH → NaCl + H₂O";
+
+          result.innerText =
+          "Neutralization completed";
+
         }
-        else if(combo==="H₂SO₄+NaOH"){
-          zone.innerHTML="⚗️ Acid-Base Reaction<br>H₂SO₄ + NaOH → Na₂SO₄ + H₂O";
+
+        else if(combo === "H₂SO₄+NaOH"){
+
+          zone.innerHTML =
+          "⚗️ Acid-Base Reaction<br>" +
+          "H₂SO₄ + NaOH → Na₂SO₄ + H₂O";
+
+          result.innerText =
+          "Acid-base reaction completed";
+
         }
-        else if(combo==="NaCl+H₂O"){
-          zone.innerHTML="💧 Dissolution<br>NaCl in Water";
+
+        else if(combo === "NaCl+H₂O"){
+
+          zone.innerHTML =
+          "💧 Dissolution<br>" +
+          "NaCl dissolved in water";
+
+          result.innerText =
+          "Salt dissolved";
+
         }
-        else if(combo==="HCl+H₂O"){
-          zone.innerHTML="🌡️ Dilution Reaction";
+
+        else if(combo === "HCl+H₂O"){
+
+          zone.innerHTML =
+          "🌡️ Dilution Reaction";
+
+          result.innerText =
+          "Dilution completed";
+
         }
-        else if(combo.includes("HCl") || combo.includes("H₂SO₄")){
-          zone.innerHTML="🧪 Acidic Reaction";
+
+        else if(
+          combo.includes("HCl") ||
+          combo.includes("H₂SO₄")
+        ){
+
+          zone.innerHTML =
+          "🧪 Acidic Reaction";
+
+          result.innerText =
+          "Acidic reaction observed";
+
         }
+
         else{
-          zone.innerHTML="❌ No Reaction";
+
+          zone.innerHTML =
+          "❌ No Reaction";
+
+          result.innerText =
+          "No visible reaction";
+
         }
 
-        log.value+="Reaction: "+combo+"\n";
+        // LOG
+        log.value +=
+        "Reaction: " + combo + "\n";
 
-        mixItems=[];
-        hasBeaker=false;
+        // RESET
+        mixItems = [];
+        hasBeaker = false;
 
       },1200);
+
     }
 
     // STORAGE
-    else if(zone.id==="store"){
-      result.innerText=dragged+" stored";
+    else if(zone.id === "store"){
+
+      result.innerText =
+      dragged + " stored";
+
+      zone.innerHTML =
+      "📦 " + dragged;
+
     }
 
     // OBSERVE
-    else if(zone.id==="observe"){
-      log.value+="Observed: "+dragged+"\n";
+    else if(zone.id === "observe"){
+
+      zone.innerHTML =
+      "👀 Observing " + dragged;
+
+      log.value +=
+      "Observed: " + dragged + "\n";
+
     }
 
-    // EXPERIMENT
-    else if(zone.id==="exp"){
-      result.innerText="🧪 Setup ready";
+    // EXPERIMENT AREA
+    else if(zone.id === "exp"){
+
+      zone.innerHTML =
+      "🧪 Setup Ready";
+
+      result.innerText =
+      "Experiment setup ready";
+
     }
 
   });
+
 });
 </script>
 
 </body>
 </html>
-```
