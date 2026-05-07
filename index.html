@@ -6,216 +6,551 @@
 <title>Virtual Chemistry Lab</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI', sans-serif;
+:root{
+  --bg:#0b1020;
+  --card:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.15);
+  --accent:#7dd3fc;
+  --text:#eaf2ff;
 }
 
 body{
-    background:
-    linear-gradient(rgba(5,10,30,0.88), rgba(15,20,50,0.92)),
-    url('https://images.unsplash.com/photo-1532634896-26909d0d4b6b?q=80&w=1600');
-    
-    background-size:cover;
-    background-position:center;
-    color:white;
-    min-height:100vh;
+  margin:0;
+  font-family:Segoe UI,Arial,sans-serif;
+
+  background:
+  linear-gradient(rgba(11,16,32,0.88), rgba(26,42,90,0.92)),
+  url('https://images.unsplash.com/photo-1532634896-26909d0d4b6b?q=80&w=1600&auto=format&fit=crop');
+
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+
+  color:var(--text);
 }
 
-/* Navbar */
-nav{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 8%;
+header,footer{
+  text-align:center;
+  padding:15px;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-.logo{
-    font-size:28px;
-    font-weight:bold;
-    color:#7dd3fc;
+/* BACK BUTTON */
+.top-btn{
+  text-align:center;
+  margin-top:15px;
 }
 
-.nav-btn{
-    text-decoration:none;
-    color:black;
-    background:linear-gradient(90deg,#7dd3fc,#a78bfa);
-    padding:12px 22px;
-    border-radius:12px;
-    font-weight:bold;
+.top-btn a{
+  text-decoration:none;
+  padding:10px 22px;
+  border-radius:10px;
+
+  background:linear-gradient(90deg,#7dd3fc,#a78bfa);
+  color:black;
+  font-weight:bold;
+
+  transition:0.3s;
 }
 
-/* Hero */
-.hero{
-    text-align:center;
-    padding:70px 20px 50px;
+.top-btn a:hover{
+  transform:scale(1.05);
+  display:inline-block;
 }
 
-.hero h1{
-    font-size:60px;
-    margin-bottom:20px;
-    background:linear-gradient(90deg,#7dd3fc,#c084fc);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+.container{
+  display:grid;
+  grid-template-columns:1fr 2fr 1fr;
+  gap:15px;
+  padding:15px;
 }
 
-.hero p{
-    font-size:20px;
-    opacity:0.9;
-    max-width:700px;
-    margin:auto;
-    line-height:1.6;
-}
-
-.hero-btn{
-    display:inline-block;
-    margin-top:30px;
-    text-decoration:none;
-    background:linear-gradient(90deg,#7dd3fc,#a78bfa);
-    color:black;
-    padding:15px 35px;
-    border-radius:12px;
-    font-weight:bold;
-    font-size:18px;
-}
-
-/* Cards */
-.features{
-    width:90%;
-    margin:40px auto;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:25px;
-}
-
+/* CARD */
 .card{
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.15);
-    backdrop-filter:blur(12px);
-    border-radius:20px;
-    padding:30px;
-    text-align:center;
-    transition:0.3s;
+  background:rgba(255,255,255,0.08);
+  padding:15px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(10px);
+
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
 }
 
-.card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 10px 30px rgba(125,211,252,0.25);
+/* DRAG ITEMS */
+.item{
+  padding:12px;
+  margin:8px 0;
+
+  background:linear-gradient(90deg,#7dd3fc,#a78bfa);
+  color:black;
+
+  border-radius:10px;
+  cursor:grab;
+  text-align:center;
+  font-weight:bold;
+
+  transition:0.25s;
 }
 
-.card h2{
-    font-size:26px;
-    margin-bottom:15px;
+.item:hover{
+  transform:translateY(-3px);
+  box-shadow:0 5px 15px rgba(125,211,252,0.4);
 }
 
-.card p{
-    opacity:0.85;
-    line-height:1.5;
+.item:active{
+  transform:scale(1.08);
 }
 
-/* Stats */
-.stats{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:25px;
-    margin:60px 20px;
+/* DROP ZONES */
+.dropzone{
+  height:120px;
+
+  border:2px dashed var(--accent);
+  border-radius:12px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+
+  transition:0.3s;
+  background:rgba(255,255,255,0.03);
 }
 
-.stat-box{
-    background:rgba(255,255,255,0.08);
-    padding:25px 35px;
-    border-radius:15px;
-    min-width:180px;
+.dropzone.hover{
+  background:rgba(125,211,252,0.18);
+  transform:scale(1.03);
 }
 
-.stat-box h2{
-    color:#7dd3fc;
-    font-size:32px;
+/* REACTION ANIMATION */
+@keyframes react{
+  0%{opacity:0.3;}
+  50%{
+    opacity:1;
+    transform:scale(1.04);
+  }
+  100%{opacity:0.3;}
 }
 
-/* Footer */
-footer{
-    text-align:center;
-    padding:30px;
-    opacity:0.8;
+.react{
+  animation:react 1s infinite;
 }
 
-@media(max-width:768px){
-    .hero h1{
-        font-size:38px;
-    }
+/* LAB GRID */
+.lab-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+/* RESULT */
+#result{
+  margin-top:15px;
+  color:#7dd3fc;
+  font-weight:bold;
+  font-size:18px;
+}
+
+/* LOG */
+textarea{
+  width:100%;
+  margin-top:12px;
+  padding:12px;
+
+  background:rgba(255,255,255,0.05);
+  color:white;
+
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:10px;
+
+  resize:none;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+  .container{
+    grid-template-columns:1fr;
+  }
+
+  .lab-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .lab-grid{
+    grid-template-columns:1fr;
+  }
+
+  header h1{
+    font-size:28px;
+  }
+
 }
 </style>
-
 </head>
+
 <body>
 
-<nav>
-    <div class="logo">🧪 Virtual Chemistry Lab</div>
-    <a href="index.html" class="nav-btn">Launch Lab</a>
-</nav>
+<header>
+<h1>🧪 Virtual Chemistry Lab</h1>
+<p>Perform Experiments | Observe Reactions | Learn Chemistry</p>
+</header>
 
-<section class="hero">
-    <h1>Virtual Chemistry Laboratory</h1>
-    <p>
-        Experience chemistry like never before. Perform live experiments,
-        analyze reactions, and master scientific concepts through immersive simulations.
-    </p>
+<!-- HOME BUTTON -->
+<div class="top-btn">
+  <a href="home.html">⬅ Back to Home</a>
+</div>
 
-    <a href="index.html" class="hero-btn">
-        Start Experiment →
-    </a>
-</section>
+<div class="container">
 
-<section class="features">
+<!-- LEFT PANEL -->
+<div class="card">
 
-    <div class="card">
-        <h2>⚗️ Smart Experiments</h2>
-        <p>Perform acid-base, heating, and reaction simulations interactively.</p>
-    </div>
+<h3>📋 Instructions</h3>
 
-    <div class="card">
-        <h2>📊 Observation Logs</h2>
-        <p>Track every experiment and record scientific observations instantly.</p>
-    </div>
+<ul>
+<li>Place Beaker in Mixing Zone</li>
+<li>Add chemicals</li>
+<li>Use Reaction Zone</li>
+<li>Observe output</li>
+<li>Check logs for observations</li>
+</ul>
 
-    <div class="card">
-        <h2>🔥 Real Simulations</h2>
-        <p>Drag, drop, mix chemicals, and watch reactions happen in real time.</p>
-    </div>
+<br>
 
-    <div class="card">
-        <h2>🧠 Interactive Learning</h2>
-        <p>Understand chemical concepts visually with engaging simulations.</p>
-    </div>
+<h3>🧠 Experiment Tips</h3>
 
-</section>
+<p>
+Try combining acids and bases to perform neutralization reactions.
+Observe different outputs in the reaction zone.
+</p>
 
-<section class="stats">
+</div>
 
-    <div class="stat-box">
-        <h2>20+</h2>
-        <p>Experiments</p>
-    </div>
+<!-- CENTER PANEL -->
+<div class="card">
 
-    <div class="stat-box">
-        <h2>50+</h2>
-        <p>Chemicals</p>
-    </div>
+<h3>⚗️ Lab Workspace</h3>
 
-    <div class="stat-box">
-        <h2>100%</h2>
-        <p>Interactive</p>
-    </div>
+<br>
 
-</section>
+<div class="lab-grid">
+
+<div class="dropzone" id="mix">
+Mixing Zone
+</div>
+
+<div class="dropzone" id="heat">
+Heating Zone
+</div>
+
+<div class="dropzone" id="react">
+Reaction Zone
+</div>
+
+<div class="dropzone" id="store">
+Storage
+</div>
+
+<div class="dropzone" id="observe">
+Observation
+</div>
+
+<div class="dropzone" id="exp">
+Experiment Area
+</div>
+
+</div>
+
+<p id="result">
+No activity yet...
+</p>
+
+<textarea
+id="log"
+rows="5"
+placeholder="Observation log..."
+></textarea>
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="card">
+
+<h3>🧫 Equipment</h3>
+
+<div class="item" draggable="true">
+Beaker
+</div>
+
+<h3>🧴 Acids</h3>
+
+<div class="item" draggable="true">
+HCl
+</div>
+
+<div class="item" draggable="true">
+H₂SO₄
+</div>
+
+<h3>🧪 Bases</h3>
+
+<div class="item" draggable="true">
+NaOH
+</div>
+
+<div class="item" draggable="true">
+KOH
+</div>
+
+<h3>🧂 Others</h3>
+
+<div class="item" draggable="true">
+NaCl
+</div>
+
+<div class="item" draggable="true">
+H₂O
+</div>
+
+</div>
+
+</div>
 
 <footer>
-    © 2026 Virtual Chemistry Lab | Built for Learning
+<p>© 2026 Virtual Chemistry Lab</p>
 </footer>
+
+<script>
+let dragged = "";
+let mixItems = [];
+let hasBeaker = false;
+
+// DRAGGING
+document.querySelectorAll(".item").forEach(item=>{
+
+  item.addEventListener("dragstart",()=>{
+
+    dragged = item.innerText;
+
+  });
+
+});
+
+// DROP ZONES
+document.querySelectorAll(".dropzone").forEach(zone=>{
+
+  zone.addEventListener("dragover",(e)=>{
+
+    e.preventDefault();
+    zone.classList.add("hover");
+
+  });
+
+  zone.addEventListener("dragleave",()=>{
+
+    zone.classList.remove("hover");
+
+  });
+
+  zone.addEventListener("drop",()=>{
+
+    zone.classList.remove("hover");
+
+    let result = document.getElementById("result");
+    let log = document.getElementById("log");
+
+    // MIXING ZONE
+    if(zone.id === "mix"){
+
+      if(dragged === "Beaker"){
+
+        hasBeaker = true;
+        zone.innerHTML = "🧫 Beaker";
+
+      }
+
+      else if(hasBeaker){
+
+        mixItems.push(dragged);
+
+        zone.innerHTML =
+        "🧫 " + mixItems.join(" + ");
+
+      }
+
+      else{
+
+        result.innerText =
+        "⚠️ Add Beaker first!";
+
+      }
+
+    }
+
+    // HEATING ZONE
+    else if(zone.id === "heat"){
+
+      zone.innerHTML =
+      "🔥 " + dragged;
+
+      result.innerText =
+      dragged + " heated successfully";
+
+      log.value +=
+      "Heated: " + dragged + "\n";
+
+    }
+
+    // REACTION ZONE
+    else if(zone.id === "react"){
+
+      if(!hasBeaker || mixItems.length === 0){
+
+        zone.innerHTML =
+        "⚠️ No mixture!";
+
+        return;
+
+      }
+
+      let combo =
+      mixItems.sort().join("+");
+
+      zone.classList.add("react");
+
+      zone.innerHTML =
+      "⚗️ Reacting...<br>" +
+      mixItems.join(" + ");
+
+      setTimeout(()=>{
+
+        zone.classList.remove("react");
+
+        // REACTIONS
+        if(combo === "HCl+NaOH"){
+
+          zone.innerHTML =
+          "⚗️ Neutralization<br>" +
+          "HCl + NaOH → NaCl + H₂O";
+
+          result.innerText =
+          "Neutralization completed";
+
+        }
+
+        else if(combo === "H₂SO₄+NaOH"){
+
+          zone.innerHTML =
+          "⚗️ Acid-Base Reaction<br>" +
+          "H₂SO₄ + NaOH → Na₂SO₄ + H₂O";
+
+          result.innerText =
+          "Acid-base reaction completed";
+
+        }
+
+        else if(combo === "NaCl+H₂O"){
+
+          zone.innerHTML =
+          "💧 Dissolution<br>" +
+          "NaCl dissolved in water";
+
+          result.innerText =
+          "Salt dissolved";
+
+        }
+
+        else if(combo === "HCl+H₂O"){
+
+          zone.innerHTML =
+          "🌡️ Dilution Reaction";
+
+          result.innerText =
+          "Dilution completed";
+
+        }
+
+        else if(
+          combo.includes("HCl") ||
+          combo.includes("H₂SO₄")
+        ){
+
+          zone.innerHTML =
+          "🧪 Acidic Reaction";
+
+          result.innerText =
+          "Acidic reaction observed";
+
+        }
+
+        else{
+
+          zone.innerHTML =
+          "❌ No Reaction";
+
+          result.innerText =
+          "No visible reaction";
+
+        }
+
+        // LOG
+        log.value +=
+        "Reaction: " + combo + "\n";
+
+        // RESET
+        mixItems = [];
+        hasBeaker = false;
+
+      },1200);
+
+    }
+
+    // STORAGE
+    else if(zone.id === "store"){
+
+      result.innerText =
+      dragged + " stored";
+
+      zone.innerHTML =
+      "📦 " + dragged;
+
+    }
+
+    // OBSERVE
+    else if(zone.id === "observe"){
+
+      zone.innerHTML =
+      "👀 Observing " + dragged;
+
+      log.value +=
+      "Observed: " + dragged + "\n";
+
+    }
+
+    // EXPERIMENT AREA
+    else if(zone.id === "exp"){
+
+      zone.innerHTML =
+      "🧪 Setup Ready";
+
+      result.innerText =
+      "Experiment setup ready";
+
+    }
+
+  });
+
+});
+</script>
 
 </body>
 </html>
